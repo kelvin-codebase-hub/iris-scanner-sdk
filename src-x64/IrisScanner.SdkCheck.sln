@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556F}") = "IrisScanner.SdkCheck", "IrisScanner.SdkCheck\IrisScanner.SdkCheck.csproj", "{5AEB933A-0E67-4189-9698-D3EF02844D32}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33} = {5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IrisScanner.Bridge", "IrisScanner.Bridge\IrisScanner.Bridge.vcxproj", "{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AEB933A-0E67-4189-9698-D3EF02844D32}.Debug|x64.ActiveCfg = Debug|x64
+		{5AEB933A-0E67-4189-9698-D3EF02844D32}.Debug|x64.Build.0 = Debug|x64
+		{5AEB933A-0E67-4189-9698-D3EF02844D32}.Release|x64.ActiveCfg = Release|x64
+		{5AEB933A-0E67-4189-9698-D3EF02844D32}.Release|x64.Build.0 = Release|x64
+		{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}.Debug|x64.ActiveCfg = Debug|x64
+		{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}.Debug|x64.Build.0 = Debug|x64
+		{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}.Release|x64.ActiveCfg = Release|x64
+		{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {329D7777-4DA7-4208-B9F2-BB78A253CF2F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>IrisScanner.SdkCheck</RootNamespace>
+    <AssemblyName>IrisScanner.SdkCheck</AssemblyName>
+    <StartAction>Project</StartAction>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VendorSdkRoot Condition="'$(VendorSdkRoot)' == '' and '$(SDKRoot)' != ''">$(SDKRoot)</VendorSdkRoot>
+    <VendorSdkRoot Condition="'$(VendorSdkRoot)' == ''">$(MSBuildProjectDirectory)\..\sdk</VendorSdkRoot>
+    <BridgeProject>$(MSBuildProjectDirectory)\..\IrisScanner.Bridge\IrisScanner.Bridge.vcxproj</BridgeProject>
+    <BridgeOutput>$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\IrisScanner.Bridge.dll</BridgeOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Reference Include="IrisScanner.Bridge">
+      <HintPath>$(BridgeOutput)</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <VendorRuntime Include="$(VendorSdkRoot)\*.dll" />
+    <VendorRuntime Include="$(VendorSdkRoot)\IKConfig.ini" />
+  </ItemGroup>
+
+  <Target Name="ValidateVendorSdk" BeforeTargets="CopyVendorSdk">
+    <Error Condition="!Exists('$(VendorSdkRoot)\IKConfig.ini')" Text="Vendor x64 SDK was not found at '$(VendorSdkRoot)'. Put the official x64 SDK under 'src-x64\sdk' or build with /p:VendorSdkRoot=..." />
+    <Error Condition="!Exists('$(VendorSdkRoot)\IKSDKAPI.dll')" Text="Vendor x64 runtime is incomplete at '$(VendorSdkRoot)'. Missing IKSDKAPI.dll." />
+    <Error Condition="!Exists('$(VendorSdkRoot)\demo-src\IKSDKAPI.lib')" Text="Vendor x64 developer SDK is incomplete at '$(VendorSdkRoot)'. Missing demo-src\IKSDKAPI.lib. A runtime-only SDK package is not enough to build the bridge." />
+    <Error Condition="!Exists('$(VendorSdkRoot)\demo-src\Include\IKBaseSDKAPI.h')" Text="Vendor x64 developer SDK is incomplete at '$(VendorSdkRoot)'. Missing demo-src\Include\IKBaseSDKAPI.h." />
+  </Target>
+
+  <Target Name="BuildBridge" BeforeTargets="ResolveAssemblyReferences" Condition="'$(BuildingSolutionFile)' != 'true'">
+    <MSBuild Projects="$(BridgeProject)" Targets="Build" Properties="Configuration=$(Configuration);Platform=x64;VendorSdkRoot=$(VendorSdkRoot)" />
+  </Target>
+
+  <Target Name="CopyVendorSdk" AfterTargets="Build">
+    <Copy SourceFiles="@(VendorRuntime)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

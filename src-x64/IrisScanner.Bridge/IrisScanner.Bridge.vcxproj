@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{5C492A7C-15CA-4DA2-8A9F-9B25C3E05D33}</ProjectGuid>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>IrisScannerBridge</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="ToolsetSelection">
+    <PreferredPlatformToolset Condition="'$(PreferredPlatformToolset)' == '' and '$(VisualStudioVersion)' == '15.0'">v141</PreferredPlatformToolset>
+    <PreferredPlatformToolset Condition="'$(PreferredPlatformToolset)' == '' and '$(VisualStudioVersion)' == '16.0'">v142</PreferredPlatformToolset>
+    <PreferredPlatformToolset Condition="'$(PreferredPlatformToolset)' == '' and '$(VisualStudioVersion)' == '17.0'">v143</PreferredPlatformToolset>
+    <PreferredPlatformToolset Condition="'$(PreferredPlatformToolset)' == '' and '$(VisualStudioVersion)' == '18.0'">v145</PreferredPlatformToolset>
+    <PreferredPlatformToolset Condition="'$(PreferredPlatformToolset)' == ''">v143</PreferredPlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(PreferredPlatformToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>$(PreferredPlatformToolset)</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <SDKRoot Condition="'$(SDKRoot)' == '' and '$(VendorSdkRoot)' != ''">$(VendorSdkRoot)</SDKRoot>
+    <SDKRoot Condition="'$(SDKRoot)' == ''">$(MSBuildProjectDirectory)\..\sdk</SDKRoot>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir>$(MSBuildProjectDirectory)\..\IrisScanner.SdkCheck\bin\$(Configuration)\net472\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <TargetName>IrisScanner.Bridge</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SDKRoot)\demo-src\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SDKRoot)\demo-src;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>IKSDKAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SDKRoot)\demo-src\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINDOWS;_USRDLL;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SDKRoot)\demo-src;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>IKSDKAPI.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="IrisScannerBridge.h" />
+    <ClInclude Include="IrisScannerContracts.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="IrisScannerBridge.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <Target Name="ValidateVendorSdk" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(SDKRoot)\IKConfig.ini')" Text="Vendor x64 SDK was not found at '$(SDKRoot)'. Put the official x64 SDK under 'src-x64\sdk' or build with /p:SDKRoot=..." />
+    <Error Condition="!Exists('$(SDKRoot)\IKSDKAPI.dll')" Text="Vendor x64 runtime is incomplete at '$(SDKRoot)'. Missing IKSDKAPI.dll." />
+    <Error Condition="!Exists('$(SDKRoot)\demo-src\IKSDKAPI.lib')" Text="Vendor x64 developer SDK is incomplete at '$(SDKRoot)'. Missing demo-src\IKSDKAPI.lib. A runtime-only SDK package is not enough to build the bridge." />
+    <Error Condition="!Exists('$(SDKRoot)\demo-src\Include\IKBaseSDKAPI.h')" Text="Vendor x64 developer SDK is incomplete at '$(SDKRoot)'. Missing demo-src\Include\IKBaseSDKAPI.h." />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
