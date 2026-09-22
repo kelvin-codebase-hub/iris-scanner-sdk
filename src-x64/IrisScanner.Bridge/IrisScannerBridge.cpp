@@ -98,6 +98,7 @@ namespace IrisScanner
     {
         disposed_ = false;
         initialized_ = false;
+        initializedMode_ = IrisInitMode::Default;
         lastInitResult_ = IK_Err_INIT_FAILED;
         lastCameraEventCode_ = -1;
         lastCameraEventLoggedAtMs_ = Int64::MinValue;
@@ -236,6 +237,7 @@ namespace IrisScanner
         const auto effectiveMode = mode == IrisInitMode::Iris
             ? IrisInitMode::Both
             : mode;
+        initializedMode_ = effectiveMode;
         const auto nativeMode = static_cast<IKInitMode>(static_cast<int>(effectiveMode));
         const int initResult = sdk_->Init(nativeCallback_, nativeMode);
         ThrowIfImmediateError("Init", initResult);
@@ -413,6 +415,7 @@ namespace IrisScanner
 
         sdk_->Release();
         initialized_ = false;
+        initializedMode_ = IrisInitMode::Default;
         ResetIdentifyInput();
         RaiseLog("SDK", IrisLogLevel::Info, "Release completed.");
     }
@@ -826,6 +829,23 @@ namespace IrisScanner
     void IrisScannerBridge::RaisePreviewFrame(const IKCameraUpdated& cameraUpdate)
     {
         if (PreviewFrameUpdated == nullptr || cameraUpdate.frame == nullptr || cameraUpdate.frame->empty())
+        {
+            return;
+        }
+
+        // Both mode produces face, depth, IR and iris frames through the same
+        // callback. Publishing all of them to one kiosk preview makes the UI
+        // alternate between streams and appear to flicker. Keep all streams
+        // active inside the vendor SDK for tracking/capture, but expose only
+        // iris frames to the preview consumer. The M10 may emit a full iris,
+        // left VGA, right VGA, or combined VGA frame depending on its state.
+        const auto frameType = cameraUpdate.frame->frame_type;
+        const bool isIrisFrame =
+            frameType == IK_Frame_IRIS ||
+            frameType == IK_Frame_IRIS_VGA_L ||
+            frameType == IK_Frame_IRIS_VGA_R ||
+            frameType == IK_Frame_IRIS_VGA_LR;
+        if (initializedMode_ == IrisInitMode::Both && !isIrisFrame)
         {
             return;
         }

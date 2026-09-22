@@ -83,6 +83,7 @@ namespace IrisScanner
         IKBaseSDKAPI* sdk_;
         bool disposed_;
         bool initialized_;
+        IrisInitMode initializedMode_;
         int lastInitResult_;
         System::Threading::ManualResetEventSlim^ initSignal_;
         IrisScannerSettings^ settings_;
